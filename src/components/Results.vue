@@ -1,6 +1,8 @@
 <template>
   <div id="results">
-    {{JSON.stringify(results)}}
+    <code v-for="event in results">
+      <pre>{{JSON.stringify(event, null, 2)}}</pre>
+    </code>
   </div>
 </template>
 

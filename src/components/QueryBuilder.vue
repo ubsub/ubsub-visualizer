@@ -1,6 +1,6 @@
 <template>
   <div class="querybuilder">
-    <input type="text" ref="queryinput" v-model="query" @keyup.enter="RunQuery" />
+    <input type="text" ref="queryinput" placeholder="Input query here..." v-model="query" @keyup.enter="RunQuery" />
     <button @click="RunQuery">Query</button>
   </div>
 </template>
@@ -9,7 +9,7 @@
 export default {
   data() {
     return {
-      query: 'all(x => x.filter(row => !!row.state))',
+      query: 'events.filter(x => !!x.payload.state).graph(x => parseDate(x.createdAt), y => y.payload.state)',
     };
   },
   methods: {

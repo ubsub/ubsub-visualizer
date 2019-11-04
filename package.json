@@ -12,6 +12,7 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "lodash": "^4.17.15",
+    "moment": "^2.24.0",
     "ubsub-oidc-proxy": "^0.1.5",
     "vue": "^2.6.10"
   },

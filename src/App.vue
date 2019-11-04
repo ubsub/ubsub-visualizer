@@ -27,8 +27,7 @@ export default {
     async execQuery(query) {
       this.error = null;
       try {
-        this.results = await queryrunner.executeQuery(this.$user, query);
-        console.dir(this.results);
+        this.results = await queryrunner.executeQuery(query);
       } catch (err) {
         this.error = `${err}`;
       }

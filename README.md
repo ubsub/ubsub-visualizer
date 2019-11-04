@@ -7,7 +7,10 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
+# Run the frontend with hot-reload
 npm run serve
+# Run the OIDC proxy
+npm run proxy
 ```
 
 ### Compiles and minifies for production
