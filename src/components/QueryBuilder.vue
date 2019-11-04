@@ -9,7 +9,7 @@
 export default {
   data() {
     return {
-      query: 'events.filter(x => !!x.payload.state).graph(x => parseDate(x.createdAt), y => y.payload.state)',
+      query: 'events.filter(x => !!x.payload.state).graph(x => ~~parseDate(x.createdAt), y => y.delivery_count)',
     };
   },
   methods: {

@@ -10,10 +10,10 @@ Probably want to use something like vm2 eventually
 
 _.mixin({
   graph(items, graphx, graphy) {
-    const rows = _.map(items, item => ({
-      x: graphx(item),
-      y: graphy(item),
-    }));
+    const rows = _.map(items, item => ([
+      graphx(item),
+      graphy(item),
+    ]));
     return {
       type: 'graph',
       rows,

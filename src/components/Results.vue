@@ -1,5 +1,6 @@
 <template>
   <div id="results">
+    <Graph v-if="results.type == 'graph'" :data="results.rows" />
     <code v-for="event in results">
       <pre>{{JSON.stringify(event, null, 2)}}</pre>
     </code>
@@ -7,7 +8,12 @@
 </template>
 
 <script>
+import Graph from './Graph.vue';
+
 export default {
+  components: {
+    Graph,
+  },
   props: {
     results: null,
   },
