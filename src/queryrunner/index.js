@@ -22,6 +22,32 @@ _.mixin({
       traces,
     };
   },
+
+  bar(items, xFunc, ...yFuncTraces) {
+    const traces = _.map(yFuncTraces, yFunc => ({
+      x: _.map(items, item => xFunc(item)),
+      y: _.map(items, item => yFunc(item)),
+      type: 'bar',
+    }));
+
+    return {
+      type: 'graph',
+      traces,
+    };
+  },
+
+  piechart(items, labelFunc, ...valFuncTraces) {
+    const traces = _.map(valFuncTraces, valFunc => ({
+      labels: _.map(items, item => labelFunc(item)),
+      values: _.map(items, item => valFunc(item)),
+      type: 'pie',
+    }));
+
+    return {
+      type: 'graph',
+      traces,
+    };
+  },
 });
 
 // eslint-disable-next-line no-unused-vars

@@ -10,7 +10,7 @@
 export default {
   data() {
     return {
-      query: 'events.filter(x => !!x.payload.state).graph(x => ~~parseDate(x.createdAt), y => y.delivery_count)',
+      query: 'events.groupBy(x => x.topic_id).map(x => ({topic_id: x[0].topic_id, count: x.length})).bar(x => x.topic_id, y => y.count)',
     };
   },
   methods: {
