@@ -1,6 +1,6 @@
 <template>
   <div id="results">
-    <Graph v-if="type == 'graph'" :data="results.rows" :mode="results.mode" />
+    <Graph v-if="type == 'graph'" :traces="results.traces" />
     <!-- Raw output -->
     <div v-if="type == 'raw'" class="rows">
       <code v-for="event in results" :key="event.id">

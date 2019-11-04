@@ -9,15 +9,17 @@ Probably want to use something like vm2 eventually
 */
 
 _.mixin({
-  graph(items, graphx, graphy, mode = 'lines+markers') {
-    const rows = _.map(items, item => ([
-      graphx(item),
-      graphy(item),
-    ]));
+  graph(items, xFunc, ...yFuncTraces) {
+    const traces = _.map(yFuncTraces, yFunc => ({
+      x: _.map(items, item => xFunc(item)),
+      y: _.map(items, item => yFunc(item)),
+      mode: 'lines+markers',
+      type: 'scatter',
+    }));
+
     return {
       type: 'graph',
-      rows,
-      mode,
+      traces,
     };
   },
 });
@@ -36,9 +38,10 @@ export default {
     });
 
     // eslint-disable-next-line no-unused-vars
-    const events = _(resp.data).each((x) => {
+    const events = _(resp.data).map((x) => {
       // eslint-disable-next-line no-param-reassign
       x.payload = JSON.parse(x.payload);
+      return x;
     });
 
     // eslint-disable-next-line no-eval
