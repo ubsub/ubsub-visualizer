@@ -10,6 +10,7 @@
     "proxy": "ubsub-oidc-proxy --backend.proxy.target http://localhost:8080"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "core-js": "^2.6.5",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
@@ -22,7 +23,6 @@
     "@vue/cli-plugin-eslint": "^3.10.0",
     "@vue/cli-service": "^3.10.0",
     "@vue/eslint-config-airbnb": "^4.0.0",
-    "axios": "^0.19.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",

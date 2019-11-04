@@ -1,6 +1,7 @@
 <template>
   <div class="querybuilder">
-    <input type="text" ref="queryinput" placeholder="Input query here..." v-model="query" @keyup.enter="RunQuery" />
+    <input type="text" ref="queryinput"
+      placeholder="Input query here..." v-model="query" @keyup.enter="RunQuery" />
     <button @click="RunQuery">Query</button>
   </div>
 </template>

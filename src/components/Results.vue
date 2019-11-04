@@ -1,13 +1,17 @@
 <template>
   <div id="results">
-    <Graph v-if="results.type == 'graph'" :data="results.rows" />
-    <code v-for="event in results">
-      <pre>{{JSON.stringify(event, null, 2)}}</pre>
-    </code>
+    <Graph v-if="type == 'graph'" :data="results.rows" :mode="results.mode" />
+    <!-- Raw output -->
+    <div v-if="type == 'raw'" class="rows">
+      <code v-for="event in results" :key="event.id">
+        <pre>{{JSON.stringify(event, null, 2)}}</pre>
+      </code>
+    </div>
   </div>
 </template>
 
 <script>
+import _ from 'lodash';
 import Graph from './Graph.vue';
 
 export default {
@@ -16,6 +20,23 @@ export default {
   },
   props: {
     results: null,
+  },
+  data() {
+    return {
+      type: 'raw',
+    };
+  },
+  watch: {
+    results() {
+      if (!this.results) return;
+      if (_.isArray(this.results)) {
+        this.type = 'raw';
+      } else if (this.results.type === 'graph') {
+        this.type = 'graph';
+      } else {
+        this.type = 'raw';
+      }
+    },
   },
 };
 </script>
