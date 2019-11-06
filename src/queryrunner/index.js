@@ -56,6 +56,11 @@ const helpers = {
   parseDate(d) {
     return moment(d).toDate();
   },
+
+  // Shorthand for a coalescing lambda function
+  at(path, defaultVal = undefined) {
+    return obj => _.get(obj, path, defaultVal);
+  },
 };
 
 export default {
