@@ -59,16 +59,14 @@ const helpers = {
 };
 
 export default {
-  async fetchDataBatch(cb, offset = 0, results = []) {
+  async fetchDataBatch(cb, searchOpts = {}, offset = 0, results = []) {
     const BATCH_SIZE = 100;
 
     const resp = await axios.get('/api/events', {
-      params: {
-        before: moment().toDate(),
-        after: moment().subtract(7, 'days').toDate(),
+      params: _.assign({
         limit: BATCH_SIZE,
         offset,
-      },
+      }, searchOpts),
     });
 
     if (resp.data.length === 0) {
@@ -84,7 +82,7 @@ export default {
     const newResults = results.concat(parsedEvents);
     await cb(newResults);
 
-    return this.fetchDataBatch(cb, offset + resp.data.length, newResults);
+    return this.fetchDataBatch(cb, searchOpts, offset + resp.data.length, newResults);
   },
   async executeQuery(events, query) {
     console.log(`Running query: ${query}`);
