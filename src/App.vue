@@ -27,7 +27,9 @@ export default {
     async execQuery(query) {
       this.error = null;
       try {
-        this.results = await queryrunner.executeQuery(query);
+        await queryrunner.fetchDataBatch(async (eventsSoFar) => {
+          this.results = await queryrunner.executeQuery(eventsSoFar, query);
+        });
       } catch (err) {
         this.error = `${err}`;
       }

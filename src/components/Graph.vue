@@ -8,7 +8,7 @@ import Plotly from 'plotly.js-dist';
 
 export default {
   props: {
-    traces: null,
+    traces: null, // basically the input to plotly
   },
   watch: {
     traces() {

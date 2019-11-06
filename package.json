@@ -15,7 +15,7 @@
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "plotly.js-dist": "^1.51.0",
-    "ubsub-oidc-proxy": "^0.1.5",
+    "ubsub-oidc-proxy": "^0.1.6",
     "vue": "^2.6.10"
   },
   "devDependencies": {

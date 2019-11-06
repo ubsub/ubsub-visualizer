@@ -52,28 +52,46 @@ evalLodash.mixin({
   },
 });
 
-function parseDate(d) {
-  return moment(d).toDate();
-}
+const helpers = {
+  parseDate(d) {
+    return moment(d).toDate();
+  },
+};
 
 export default {
-  async executeQuery(query, params = { limit: 500 }) {
-    console.log(`Running query: ${query}`);
+  async fetchDataBatch(cb, offset = 0, results = []) {
+    const BATCH_SIZE = 100;
 
     const resp = await axios.get('/api/events', {
-      params,
+      params: {
+        before: moment().toDate(),
+        after: moment().subtract(7, 'days').toDate(),
+        limit: BATCH_SIZE,
+        offset,
+      },
     });
 
-    const events = evalLodash(resp.data).map((x) => {
-      // eslint-disable-next-line no-param-reassign
-      x.payload = JSON.parse(x.payload);
-      return x;
+    if (resp.data.length === 0) {
+      return results;
+    }
+
+    const parsedEvents = _.map(resp.data, (event) => {
+      return _.assign(event, {
+        payload: JSON.parse(event.payload),
+      });
     });
 
-    const filteredEvents = minivm(query, {
-      events,
-      parseDate,
-    });
+    const newResults = results.concat(parsedEvents);
+    await cb(newResults);
+
+    return this.fetchDataBatch(cb, offset + resp.data.length, newResults);
+  },
+  async executeQuery(events, query) {
+    console.log(`Running query: ${query}`);
+
+    const filteredEvents = minivm(query, _.assign({
+      events: evalLodash(events),
+    }, helpers));
 
     return filteredEvents.value();
   },
