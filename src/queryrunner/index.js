@@ -1,6 +1,7 @@
 import axios from 'axios';
 import moment from 'moment';
 import _ from 'lodash';
+import minivm from './minivm';
 
 /*
 Lots and lots of ugly hacks to make things work with eval()
@@ -8,7 +9,8 @@ Lots and lots of ugly hacks to make things work with eval()
 Probably want to use something like vm2 eventually
 */
 
-_.mixin({
+const evalLodash = _.runInContext();
+evalLodash.mixin({
   graph(items, xFunc, ...yFuncTraces) {
     const traces = _.map(yFuncTraces, yFunc => ({
       x: _.map(items, item => xFunc(item)),
@@ -50,7 +52,6 @@ _.mixin({
   },
 });
 
-// eslint-disable-next-line no-unused-vars
 function parseDate(d) {
   return moment(d).toDate();
 }
@@ -63,15 +64,16 @@ export default {
       params,
     });
 
-    // eslint-disable-next-line no-unused-vars
-    const events = _(resp.data).map((x) => {
+    const events = evalLodash(resp.data).map((x) => {
       // eslint-disable-next-line no-param-reassign
       x.payload = JSON.parse(x.payload);
       return x;
     });
 
-    // eslint-disable-next-line no-eval
-    const filteredEvents = eval(query);
+    const filteredEvents = minivm(query, {
+      events,
+      parseDate,
+    });
 
     return filteredEvents.value();
   },
