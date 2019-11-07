@@ -6,6 +6,7 @@
 
 <script>
 import axios from 'axios';
+import _ from 'lodash';
 
 export default {
   data() {
@@ -16,10 +17,11 @@ export default {
   },
   computed: {
     options() {
-      return [{
+      const ALL_TOPICS = {
         id: null,
         name: 'All',
-      }].concat(this.topics);
+      };
+      return _.concat(ALL_TOPICS, _.sortBy(this.topics, x => x.name));
     },
   },
   watch: {

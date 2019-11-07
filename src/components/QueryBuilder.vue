@@ -1,11 +1,17 @@
 <template>
   <div class="querybuilder">
-    <TopicSelector v-model="selectedTopic" />
-    <DatePicker placeholder="After Date" v-model="after" />
-    <DatePicker placeholder="Before Date" v-model="before" />
-    <input type="text" ref="queryinput"
-      placeholder="Input query here..." v-model="query" @keyup.enter="RunQuery" />
-    <button @click="RunQuery">Query</button>
+    <div class="subele source">
+      <span>Source Data: </span>
+      <TopicSelector v-model="selectedTopic" />
+      <DatePicker placeholder="After Date" v-model="after" />
+      <DatePicker placeholder="Before Date" v-model="before" />
+    </div>
+    <div class="subele query">
+      <span>Query: </span>
+      <input type="text" ref="queryinput"
+        placeholder="Input query here..." v-model="query" @keyup.enter="RunQuery" />
+      <button @click="RunQuery">Query</button>
+    </div>
   </div>
 </template>
 
@@ -50,8 +56,14 @@ export default {
     padding: 16px;
     box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
 
-    input {
-      width: 90%;
+    div.subele {
+      padding: 8px;
+    }
+
+    div.query {
+      input {
+        width: 90%;
+      }
     }
   }
 </style>
