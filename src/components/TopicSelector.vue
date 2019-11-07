@@ -29,7 +29,7 @@ export default {
   },
   mounted() {
     axios.get('/api/topic')
-      .then(resp => {
+      .then((resp) => {
         this.topics = resp.data;
       });
   },

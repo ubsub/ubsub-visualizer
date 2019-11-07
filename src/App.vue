@@ -29,9 +29,7 @@ export default {
       try {
         await queryrunner.fetchDataBatch(async (eventsSoFar) => {
           this.results = await queryrunner.executeQuery(eventsSoFar, query.query);
-        }, {
-          topic_id: query.topicId,
-        });
+        }, query.filter);
       } catch (err) {
         this.error = `${err}`;
       }
