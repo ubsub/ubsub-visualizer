@@ -65,7 +65,7 @@ const helpers = {
 
 export default {
   async fetchDataBatch(cb, searchOpts = {}, offset = 0, results = []) {
-    const BATCH_SIZE = 100;
+    const BATCH_SIZE = 200;
 
     const resp = await axios.get('/api/events', {
       params: _.assign({

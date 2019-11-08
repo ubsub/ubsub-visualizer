@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <QueryBuilder @query="execQuery" />
-    <div class="error" v-if="error">{{error}}</div>
+    <div class="box error" v-if="error">{{error}}</div>
+    <div class="box" v-if="resultCount > 0">
+      <i class="fas fa-spin fa-cog"></i> Received {{resultCount}} events...
+    </div>
     <Results :results="results" />
   </div>
 </template>
@@ -21,17 +24,23 @@ export default {
     return {
       error: null,
       results: [],
+      resultCount: -1,
     };
   },
   methods: {
     async execQuery(query) {
       this.error = null;
+      this.resultCount = -1;
       try {
         await queryrunner.fetchDataBatch(async (eventsSoFar) => {
+          if (this.cancelQuery) throw new Error('Canceled');
           this.results = await queryrunner.executeQuery(eventsSoFar, query.query);
+          this.resultCount = eventsSoFar.length;
         }, query.filter);
       } catch (err) {
         this.error = `${err}`;
+      } finally {
+        this.resultCount = -1;
       }
     },
   },
@@ -47,9 +56,12 @@ export default {
   margin-top: 60px;
 }
 
-.error {
+div.box {
   padding: 8px;
   margin: 8px;
-  border: 1px solid maroon;
+
+  &.error {
+    border: 1px solid maroon;
+  }
 }
 </style>
