@@ -1,16 +1,20 @@
 <template>
-  <div class="querybuilder">
-    <div class="subele source">
-      <span>Source Data: </span>
-      <TopicSelector v-model="selectedTopic" />
-      <DatePicker placeholder="After Date" v-model="after" />
-      <DatePicker placeholder="Before Date" v-model="before" />
+  <div class="box has-background-light">
+    <div class="columns">
+      <div class="column is-1">Source Data:</div>
+      <div class="column"><TopicSelector v-model="selectedTopic" /></div>
+      <div class="column"><DatePicker placeholder="After Date" v-model="after" /></div>
+      <div class="column"><DatePicker placeholder="Before Date" v-model="before" /></div>
     </div>
-    <div class="subele query">
-      <span>Query: </span>
-      <input type="text" ref="queryinput" :disabled="!!disabled"
-        placeholder="Input query here..." v-model="query" @keyup.enter="RunQuery" />
-      <button @click="RunQuery" :disabled="!!disabled">Query</button>
+    <div class="columns">
+      <div class="column is-1">Query:</div>
+      <div class="column">
+        <input type="text" class="input" ref="queryinput" :disabled="!!disabled"
+          placeholder="Input query here..." v-model="query" @keyup.enter="RunQuery" />
+      </div>
+      <div class="column is-1">
+        <button class="button is-primary" @click="RunQuery" :disabled="!!disabled">Query</button>
+      </div>
     </div>
   </div>
 </template>
@@ -52,21 +56,3 @@ export default {
   },
 };
 </script>
-
-<style scoped lang="less">
-  .querybuilder {
-    border: 1px solid #ddd;
-    padding: 16px;
-    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
-
-    div.subele {
-      padding: 8px;
-    }
-
-    div.query {
-      input {
-        width: 90%;
-      }
-    }
-  }
-</style>

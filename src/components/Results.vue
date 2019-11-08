@@ -1,5 +1,5 @@
 <template>
-  <div id="results">
+  <div class="box">
     <Graph v-if="type == 'graph'" :traces="results.traces" :layout="results.layout" />
     <!-- Raw output -->
     <div v-if="type == 'raw'" class="rows">
@@ -40,11 +40,3 @@ export default {
   },
 };
 </script>
-
-<style lang="less" scoped>
-  #results {
-    border: 1px solid #ddd;
-    padding: 16px;
-    margin: 8px 0;
-  }
-</style>

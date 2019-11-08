@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <QueryBuilder @query="execQuery" :disabled="running" />
-    <div class="box error" v-if="error">{{error}}</div>
-    <div class="box" v-if="running">
+    <div class="notification is-danger" v-if="error">{{error}}</div>
+    <div class="notification is-info" v-if="running">
       <i class="fas fa-spin fa-cog"></i> Received {{resultCount}} events... <a href="#" @click="cancelQuery">Cancel</a>
     </div>
     <Results :results="results" />
@@ -13,6 +13,7 @@
 import QueryBuilder from './components/QueryBuilder.vue';
 import Results from './components/Results.vue';
 import queryrunner from './queryrunner';
+import 'bulma/css/bulma.css'
 
 export default {
   name: 'app',
@@ -56,22 +57,3 @@ export default {
   },
 };
 </script>
-
-<style lang="less">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-div.box {
-  padding: 8px;
-  margin: 8px;
-
-  &.error {
-    border: 1px solid maroon;
-  }
-}
-</style>

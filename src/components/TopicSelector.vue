@@ -1,7 +1,9 @@
 <template>
-  <select v-model="selected">
-    <option v-for="opt in options" :value="opt.id" :key="opt.id">{{opt.name}} ({{opt.id || '*'}})</option>
-  </select>
+  <div class="select">
+    <select v-model="selected">
+      <option v-for="opt in options" :value="opt.id" :key="opt.id">{{opt.name}} ({{opt.id || '*'}})</option>
+    </select>
+  </div>
 </template>
 
 <script>
