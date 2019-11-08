@@ -32,6 +32,9 @@ export default {
   },
   methods: {
     async execQuery(query) {
+      if (this.running) {
+        return;
+      }
       this.error = null;
       this.resultCount = 0;
       this.running = true;
