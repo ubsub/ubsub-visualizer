@@ -8,9 +8,8 @@
     </div>
     <div class="columns">
       <div class="column is-1">Query:</div>
-      <div class="column">
-        <input type="text" class="input" ref="queryinput" :disabled="!!disabled"
-          placeholder="Input query here..." v-model="query" @keyup.enter="RunQuery" />
+      <div class="column" @keyup.ctrl.enter="RunQuery">
+        <CodeMirror ref="queryinput" placeholder="Input query here..." :disabled="!!disabled" v-model="query" />
       </div>
       <div class="column is-1">
         <button class="button is-primary" @click="RunQuery" :disabled="!!disabled">Query</button>
@@ -22,18 +21,20 @@
 <script>
 import TopicSelector from './TopicSelector.vue';
 import DatePicker from './ui/DatePicker.vue';
+import CodeMirror from './ui/CodeMirror.vue';
 
 export default {
   components: {
     TopicSelector,
     DatePicker,
+    CodeMirror,
   },
   props: {
     disabled: { default: false },
   },
   data() {
     return {
-      query: 'events.groupBy(x => x.topic_id).map(x => ({topic_id: x[0].topic_id, count: x.length})).bar(x => x.topic_id, y => y.count)',
+      query: 'events.groupBy(x => x.topic_id)\n  .map(x => ({topic_id: x[0].topic_id, count: x.length}))\n  .bar(x => x.topic_id, y => y.count)',
       selectedTopic: null,
       after: null,
       before: null,

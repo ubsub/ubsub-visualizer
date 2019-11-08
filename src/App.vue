@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container">
+  <div id="app" class="container" @keyup.esc="cancelQuery">
     <QueryBuilder @query="execQuery" :disabled="running" />
     <div class="notification is-danger" v-if="error">{{error}}</div>
     <div class="notification is-info" v-if="running">
@@ -13,7 +13,7 @@
 import QueryBuilder from './components/QueryBuilder.vue';
 import Results from './components/Results.vue';
 import queryrunner from './queryrunner';
-import 'bulma/css/bulma.css'
+import 'bulma/css/bulma.css';
 
 export default {
   name: 'app',
