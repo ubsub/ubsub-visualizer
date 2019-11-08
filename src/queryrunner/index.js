@@ -17,6 +17,7 @@ evalLodash.mixin({
       y: _.map(items, item => yFunc(item)),
       mode: 'lines+markers',
       type: 'scatter',
+      name: `${yFunc}`,
     }));
 
     return {
@@ -30,10 +31,28 @@ evalLodash.mixin({
       x: _.map(items, item => xFunc(item)),
       y: _.map(items, item => yFunc(item)),
       type: 'bar',
+      name: `${yFunc}`,
     }));
 
     return {
       type: 'graph',
+      traces,
+    };
+  },
+
+  stacked(items, xFunc, ...yFuncTraces) {
+    const traces = _.map(yFuncTraces, yFunc => ({
+      x: _.map(items, item => xFunc(item)),
+      y: _.map(items, item => yFunc(item)),
+      type: 'bar',
+      name: `${yFunc}`,
+    }));
+
+    return {
+      type: 'graph',
+      layout: {
+        barmode: 'stack',
+      },
       traces,
     };
   },
@@ -43,6 +62,7 @@ evalLodash.mixin({
       labels: _.map(items, item => labelFunc(item)),
       values: _.map(items, item => valFunc(item)),
       type: 'pie',
+      name: `${valFunc}`,
     }));
 
     return {

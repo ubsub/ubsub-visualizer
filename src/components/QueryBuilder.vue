@@ -8,7 +8,7 @@
     </div>
     <div class="subele query">
       <span>Query: </span>
-      <input type="text" ref="queryinput"
+      <input type="text" ref="queryinput" :disabled="!!disabled"
         placeholder="Input query here..." v-model="query" @keyup.enter="RunQuery" />
       <button @click="RunQuery" :disabled="!!disabled">Query</button>
     </div>

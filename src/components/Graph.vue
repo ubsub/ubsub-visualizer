@@ -9,6 +9,7 @@ import Plotly from 'plotly.js-dist';
 export default {
   props: {
     traces: null, // basically the input to plotly
+    layout: null,
   },
   watch: {
     traces() {
@@ -20,7 +21,7 @@ export default {
   },
   methods: {
     updateGraph() {
-      Plotly.newPlot(this.$refs.graph, this.traces);
+      Plotly.newPlot(this.$refs.graph, this.traces, this.layout);
     },
   },
 };
