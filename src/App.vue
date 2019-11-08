@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <QueryBuilder @query="execQuery" />
+    <QueryBuilder @query="execQuery" :disabled="running" />
     <div class="box error" v-if="error">{{error}}</div>
-    <div class="box" v-if="resultCount > 0">
-      <i class="fas fa-spin fa-cog"></i> Received {{resultCount}} events...
+    <div class="box" v-if="running">
+      <i class="fas fa-spin fa-cog"></i> Received {{resultCount}} events... <a href="#" @click="cancelQuery">Cancel</a>
     </div>
     <Results :results="results" />
   </div>
@@ -24,23 +24,33 @@ export default {
     return {
       error: null,
       results: [],
-      resultCount: -1,
+      resultCount: 0,
+      running: false,
+      cancel: false,
     };
   },
   methods: {
     async execQuery(query) {
       this.error = null;
-      this.resultCount = -1;
+      this.resultCount = 0;
+      this.running = true;
+      this.cancel = false;
       try {
         await queryrunner.fetchDataBatch(async (eventsSoFar) => {
-          if (this.cancelQuery) throw new Error('Canceled');
+          if (this.cancel) throw new Error('Canceled');
           this.results = await queryrunner.executeQuery(eventsSoFar, query.query);
           this.resultCount = eventsSoFar.length;
         }, query.filter);
       } catch (err) {
         this.error = `${err}`;
       } finally {
-        this.resultCount = -1;
+        this.running = false;
+        this.cancel = false;
+      }
+    },
+    cancelQuery() {
+      if (this.running) {
+        this.cancel = true;
       }
     },
   },

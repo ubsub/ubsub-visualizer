@@ -10,7 +10,7 @@
       <span>Query: </span>
       <input type="text" ref="queryinput"
         placeholder="Input query here..." v-model="query" @keyup.enter="RunQuery" />
-      <button @click="RunQuery">Query</button>
+      <button @click="RunQuery" :disabled="!!disabled">Query</button>
     </div>
   </div>
 </template>
@@ -23,6 +23,9 @@ export default {
   components: {
     TopicSelector,
     DatePicker,
+  },
+  props: {
+    disabled: { default: false },
   },
   data() {
     return {
