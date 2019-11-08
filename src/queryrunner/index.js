@@ -57,6 +57,21 @@ evalLodash.mixin({
     };
   },
 
+  histogram(items, ...xFuncTraces) {
+    const traces = _.map(xFuncTraces, xFunc => ({
+      x: _.map(items, xFunc),
+      type: 'histogram',
+      name: `${xFunc}`,
+    }));
+    return {
+      type: 'graph',
+      traces,
+      layout: {
+        bargap: 0.05,
+      },
+    };
+  },
+
   piechart(items, labelFunc, ...valFuncTraces) {
     const traces = _.map(valFuncTraces, valFunc => ({
       labels: _.map(items, item => labelFunc(item)),
