@@ -1,5 +1,6 @@
 .oidcproxyrc
 .vscode/
+stack.yml
 
 .DS_Store
 node_modules
