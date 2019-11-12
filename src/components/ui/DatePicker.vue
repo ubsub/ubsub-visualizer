@@ -1,5 +1,5 @@
 <template>
-  <input class="input is-rounded" type="date" ref="date" placeholder="Date" size="14" :value="value" @input="$emit('input', $event.target.value)" />
+  <input class="input is-rounded" type="text" ref="date" placeholder="Date" size="14" :value="value" @input="$emit('input', $event.target.value)" />
 </template>
 
 <script>

@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import TopicSelector from './TopicSelector.vue';
 import DatePicker from './ui/DatePicker.vue';
 import CodeMirror from './ui/CodeMirror.vue';
@@ -36,8 +37,8 @@ export default {
     return {
       query: 'events.groupBy(x => x.topic_id)\n  .map(x => ({topic_id: x[0].topic_id, count: x.length}))\n  .bar(x => x.topic_id, y => y.count)',
       selectedTopic: null,
-      after: null,
-      before: null,
+      after: moment().subtract(30, 'd').format('Y-MM-DD'),
+      before: moment().format('Y-MM-DD'),
     };
   },
   methods: {
