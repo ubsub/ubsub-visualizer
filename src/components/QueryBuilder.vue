@@ -13,8 +13,10 @@
       </div>
       <div class="column is-1">
         <button class="button is-primary" @click="RunQuery" :disabled="!!disabled">Query</button>
+        <button class="button is-link is-small is-light" @click="$refs.helpModal.show()">Help</button>
       </div>
     </div>
+    <HelpModal visible="showHelp" ref="helpModal" />
   </div>
 </template>
 
@@ -23,12 +25,14 @@ import moment from 'moment';
 import TopicSelector from './TopicSelector.vue';
 import DatePicker from './ui/DatePicker.vue';
 import CodeMirror from './ui/CodeMirror.vue';
+import HelpModal from './HelpModal.vue';
 
 export default {
   components: {
     TopicSelector,
     DatePicker,
     CodeMirror,
+    HelpModal,
   },
   props: {
     disabled: { default: false },

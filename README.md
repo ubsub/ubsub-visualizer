@@ -10,7 +10,7 @@ npm install
 # Run the frontend with hot-reload
 npm run serve
 # Run the OIDC proxy
-npm run proxy
+npm run proxy-serve
 ```
 
 ### Compiles and minifies for production
