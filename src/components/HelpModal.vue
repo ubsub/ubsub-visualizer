@@ -31,7 +31,16 @@
             In addition, the following helper functions are provided:
 
             <ul>
-              <li><code>parseDate</code>: Parses string to a js date object</li>
+              <li><code>parseDate(str)</code>: Parses string to a js date object</li>
+              <li><code>dateOf(date)</code>: Returns the date-part of a date-like object</li>
+              <li><code>startOf(date, unit)</code>: Shorthand to moment startOf, to truncate a time to a unit</li>
+            </ul>
+          </p>
+          <p>
+            The following raw libraries are exposed:
+            <ul>
+              <li><code>_</code>: Reference to <a href="https://lodash.com/docs/4.17.15" target="_blank">lodash</a></li>
+              <li><code>moment</code>: Reference to <a href="https://momentjs.com/docs/" target="_blank">moment</a></li>
             </ul>
           </p>
         </div>

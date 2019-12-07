@@ -68,7 +68,29 @@ evalLodash.mixin({
       traces,
       layout: {
         bargap: 0.05,
-        // barmode: 'stack',
+      },
+    };
+  },
+
+  histogramBy(items, byFunc, bucketFunc) {
+    const traces = {};
+    _.each(items, (item) => {
+      const key = byFunc(item);
+      if (!traces[key]) {
+        traces[key] = {
+          x: [],
+          type: 'histogram',
+          name: key,
+        };
+      }
+      traces[key].x.push(bucketFunc(item));
+    });
+    return {
+      type: 'graph',
+      traces: _.values(traces),
+      layout: {
+        bargap: 0.05,
+        barmode: 'stack',
       },
     };
   },
