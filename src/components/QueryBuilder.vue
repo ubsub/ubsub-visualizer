@@ -45,8 +45,15 @@ export default {
       before: moment().format('Y-MM-DD'),
     };
   },
+  mounted() {
+    if (localStorage.query) {
+      this.query = localStorage.query;
+      this.$refs.queryinput.overrideValue(this.query); // Hack for codemirror
+    }
+  },
   methods: {
     RunQuery() {
+      localStorage.query = this.query;
       this.$emit('query', {
         query: this.query,
         filter: {

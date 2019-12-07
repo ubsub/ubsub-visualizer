@@ -68,6 +68,7 @@ evalLodash.mixin({
       traces,
       layout: {
         bargap: 0.05,
+        // barmode: 'stack',
       },
     };
   },
@@ -88,6 +89,9 @@ evalLodash.mixin({
 });
 
 const helpers = {
+  moment,
+  _,
+
   parseDate(d) {
     return moment(d).toDate();
   },
@@ -95,6 +99,16 @@ const helpers = {
   // Shorthand for a coalescing lambda function
   at(path, defaultVal = undefined) {
     return obj => _.get(obj, path, defaultVal);
+  },
+
+  // Shorthand for date-only
+  dateOf(val) {
+    return moment(val).format('L');
+  },
+
+  // shorthand for startOf (truncation)
+  startOf(val, unit) {
+    return moment(val).startOf(unit).toDate();
   },
 };
 

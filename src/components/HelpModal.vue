@@ -27,6 +27,13 @@
               <li><code>.piechart(labelFunc, ...valFunc)</code>: Generate pie chart(s) given a label function, and a function to retrieve a value</li>
             </ul>
           </p>
+          <p>
+            In addition, the following helper functions are provided:
+
+            <ul>
+              <li><code>parseDate</code>: Parses string to a js date object</li>
+            </ul>
+          </p>
         </div>
       </section>
       <footer class="modal-card-foot">

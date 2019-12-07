@@ -12,12 +12,16 @@ export default {
   },
   watch: {
     disabled() {
-      this.codemirror.readonly = this.disabled;
+      this.codemirror.setOption('readonly', this.disabled);
     },
   },
   methods: {
     focus() {
       this.codemirror.focus();
+    },
+    // Weird hack to update codermirror without binding it to value
+    overrideValue(val) {
+      this.codemirror.setValue(val);
     },
   },
   mounted() {
