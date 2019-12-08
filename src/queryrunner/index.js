@@ -11,102 +11,90 @@ Probably want to use something like vm2 eventually
 
 const evalLodash = _.runInContext();
 evalLodash.mixin({
-  graph(items, xFunc, ...yFuncTraces) {
-    const traces = _.map(yFuncTraces, yFunc => ({
-      x: _.map(items, item => xFunc(item)),
-      y: _.map(items, item => yFunc(item)),
+  graph(traces, title = undefined, layout = {}) {
+    return {
+      type: 'graph',
+      traces,
+      title,
+      layout,
+    };
+  },
+
+  // Helper for graph() which assumes stacking
+  graphStacked(items, title = undefined) {
+    return this.graph(items, title, {
+      barmode: 'stack',
+      bargap: 0.05,
+    });
+  },
+
+  trace(items, xFunc, ...yFuncTraces) {
+    return _.map(yFuncTraces, yFunc => ({
+      x: _.map(items, xFunc),
+      y: _.map(items, yFunc),
       mode: 'lines+markers',
       type: 'scatter',
       name: `${yFunc}`,
     }));
-
-    return {
-      type: 'graph',
-      traces,
-    };
   },
 
-  bar(items, xFunc, ...yFuncTraces) {
-    const traces = _.map(yFuncTraces, yFunc => ({
-      x: _.map(items, item => xFunc(item)),
-      y: _.map(items, item => yFunc(item)),
+  barTrace(items, xFunc, ...yFuncTraces) {
+    return _.map(yFuncTraces, yFunc => ({
+      x: _.map(items, xFunc),
+      y: _.map(items, yFunc),
       type: 'bar',
       name: `${yFunc}`,
     }));
-
-    return {
-      type: 'graph',
-      traces,
-    };
   },
 
-  stacked(items, xFunc, ...yFuncTraces) {
-    const traces = _.map(yFuncTraces, yFunc => ({
-      x: _.map(items, item => xFunc(item)),
-      y: _.map(items, item => yFunc(item)),
-      type: 'bar',
-      name: `${yFunc}`,
+  pieTrace(items, labelFunc, ...valFuncTraces) {
+    return _.map(valFuncTraces, valFunc => ({
+      labels: _.map(items, labelFunc),
+      values: _.map(items, valFunc),
+      type: 'pie',
+      name: `${valFunc}`,
     }));
-
-    return {
-      type: 'graph',
-      layout: {
-        barmode: 'stack',
-      },
-      traces,
-    };
   },
 
+  pieMap(items) {
+    return this.pieTrace(items, (v, k) => k, v => v);
+  },
+
+  groupTrace(items, xFunc, yFunc) {
+    return _.map(items, (traceItems, traceId) => {
+      return {
+        x: _.map(traceItems, xFunc),
+        y: _.map(traceItems, yFunc),
+        mode: 'lines+markers',
+        type: 'scatter',
+        name: traceId,
+      };
+    });
+  },
+
+  // Group Trace, where it assumes the key is the x-axis, and val is y-axis
+  mapTrace(items) {
+    return this.groupTrace(items, (v, k) => k, v => v);
+  },
+
+  // Only specify x, which acts as the counter
   histogram(items, ...xFuncTraces) {
-    const traces = _.map(xFuncTraces, xFunc => ({
+    return _.map(xFuncTraces, xFunc => ({
       x: _.map(items, xFunc),
       type: 'histogram',
       name: `${xFunc}`,
     }));
-    return {
-      type: 'graph',
-      traces,
-      layout: {
-        bargap: 0.05,
-      },
-    };
   },
 
-  histogramBy(items, byFunc, bucketFunc) {
-    const traces = {};
-    _.each(items, (item) => {
-      const key = byFunc(item);
-      if (!traces[key]) {
-        traces[key] = {
-          x: [],
-          type: 'histogram',
-          name: key,
-        };
-      }
-      traces[key].x.push(bucketFunc(item));
+  // Assumes k-v, where k is the group name
+  groupHistogram(items, xFunc) {
+    return _.map(items, (traceItems, traceId) => {
+      return {
+        x: _.map(traceItems, xFunc),
+        type: 'histogram',
+        name: traceId,
+      };
     });
-    return {
-      type: 'graph',
-      traces: _.values(traces),
-      layout: {
-        bargap: 0.05,
-        barmode: 'stack',
-      },
-    };
-  },
-
-  piechart(items, labelFunc, ...valFuncTraces) {
-    const traces = _.map(valFuncTraces, valFunc => ({
-      labels: _.map(items, item => labelFunc(item)),
-      values: _.map(items, item => valFunc(item)),
-      type: 'pie',
-      name: `${valFunc}`,
-    }));
-
-    return {
-      type: 'graph',
-      traces,
-    };
   },
 });
 

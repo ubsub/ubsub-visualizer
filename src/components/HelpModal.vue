@@ -20,11 +20,20 @@
           <p>
             Once you have manipulated the data to look like you want, you have access to a few different graphing functions:
             <ul>
-              <li><code>.graph(xFunc, ...yFunc)</code>: Graphs a line-chart. The first arg is a lambda that gets the X value of the data, and all following arguments provide a y value. If more than one y-func is provided, there will be multiple data series.</li>
-              <li><code>.bar(xFunc, ...yFunc)</code>: Same as the line graph above, except will output as bar-graph</li>
-              <li><code>.stacked(xFunc, ...yFunc)</code>: The same as above, except the results are stacked.</li>
+              <li><code>.trace(xFunc, ...yFunc)</code>: Graphs a line-chart. The first arg is a lambda that gets the X value of the data, and all following arguments provide a y value. If more than one y-func is provided, there will be multiple data series.</li>
+              <li><code>.barTrace(xFunc, ...yFunc)</code>: Same as the line graph above, except will output as bar-graph</li>
+              <li><code>.pieTrace(labelFunc, ...valFunc)</code>: Generate pie chart(s) given a label function, and a function to retrieve a value</li>
+              <li><code>.mapTrace()</code>: Takes in a map and assumes the key is the x value, and the value is the y</li>
+              <li><code>.groupTrace(xFunc, yFunc)</code>: Assumes that it takes in a map, and that each key in the map is the name of a trace.  Then builds x and y given xFunc and yFunc for each trace</li>
               <li><code>.histogram(...xFunc)</code>: Will create a histogram where the x-values are counted (rather than providing the y value)</li>
-              <li><code>.piechart(labelFunc, ...valFunc)</code>: Generate pie chart(s) given a label function, and a function to retrieve a value</li>
+              <li><code>.groupHistogram(xFunc)</code>: Assumes input is a map, and the key is the name of the trace.  Will build a histogram for each trace in the map</li>
+            </ul>
+          </p>
+          <p>
+            Then, once the traces are formed, simply call <code>.graph()</code>
+            <ul>
+              <li><code>.graph([title], [layout])</code> Graph with optional title or layout options</li>
+              <li><code>.graphStacked([title])</code> Helper to call .graph() assuming layout is stacked</li>
             </ul>
           </p>
           <p>
@@ -34,6 +43,7 @@
               <li><code>parseDate(str)</code>: Parses string to a js date object</li>
               <li><code>dateOf(date)</code>: Returns the date-part of a date-like object</li>
               <li><code>startOf(date, unit)</code>: Shorthand to moment startOf, to truncate a time to a unit</li>
+              <li><code>at(path, [default])</code>: Shorthand to access a undefined-safe value. Returns a lambda to access a value, or return default</li>
             </ul>
           </p>
           <p>
