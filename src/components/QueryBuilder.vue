@@ -39,7 +39,7 @@ export default {
   },
   data() {
     return {
-      query: 'events.groupBy(x => x.topic_id)\n  .map(x => ({topic_id: x[0].topic_id, count: x.length}))\n  .bar(x => x.topic_id, y => y.count)',
+      query: 'events.countBy(x => x.topic_id).barTrace((v, k) => k, v => v).graph()',
       selectedTopic: null,
       after: moment().subtract(30, 'd').format('Y-MM-DD'),
       before: moment().format('Y-MM-DD'),
