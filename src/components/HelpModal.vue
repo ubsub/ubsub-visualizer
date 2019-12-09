@@ -24,6 +24,7 @@
               <li><code>.barTrace(xFunc, ...yFunc)</code>: Same as the line graph above, except will output as bar-graph</li>
               <li><code>.pieTrace(labelFunc, ...valFunc)</code>: Generate pie chart(s) given a label function, and a function to retrieve a value</li>
               <li><code>.mapTrace()</code>: Takes in a map and assumes the key is the x value, and the value is the y</li>
+              <li><code>.groupMapTrace()</code>: Same as .mapTrace(), but assumes the top-level object specifies a group</li>
               <li><code>.groupTrace(xFunc, yFunc)</code>: Assumes that it takes in a map, and that each key in the map is the name of a trace.  Then builds x and y given xFunc and yFunc for each trace</li>
               <li><code>.histogram(...xFunc)</code>: Will create a histogram where the x-values are counted (rather than providing the y value)</li>
               <li><code>.groupHistogram(xFunc)</code>: Assumes input is a map, and the key is the name of the trace.  Will build a histogram for each trace in the map</li>

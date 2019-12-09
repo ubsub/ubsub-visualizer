@@ -74,6 +74,10 @@ evalLodash.mixin({
 
   // Group Trace, where it assumes the key is the x-axis, and val is y-axis
   mapTrace(items) {
+    return this.trace(items, (v, k) => k, v => v);
+  },
+
+  groupMapTrace(items) {
     return this.groupTrace(items, (v, k) => k, v => v);
   },
 
